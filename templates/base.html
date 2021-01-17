@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo-app</title>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light p-3">
+    <a class="navbar-brand pl-3" href="/" style="font-size:2rem;">toto-app</a>
+  </nav>
+    {% block body %}{% endblock %}
+</body>
+
+</html>
