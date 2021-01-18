@@ -5,7 +5,7 @@ import os
 
 app=Flask(__name__)
 
-db_uri = os.environ.get('DATABESE_URL') or "sqlite:///todo.db"
+db_uri = os.environ.get('DATABESE_URL')
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
