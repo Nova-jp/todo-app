@@ -1,0 +1,5 @@
+heroku login
+
+heroku run python -a [appname] これでappnameでのpythonの対話に入れる
+>>>from app(おそらくapp.pyがメインのプログラムならappにする) import db
+>>>db.create_all()　これでdbの初期化が行える。 
