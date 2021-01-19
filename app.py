@@ -5,7 +5,7 @@ import os
 
 app=Flask(__name__)
 
-db_uri = os.environ.get('DATABESE_URL') or 'sqlite:///todo.db'
+db_uri = os.environ.get('DATABASE_URL') or "sqlite:///todo.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
@@ -65,4 +65,4 @@ def update(id):
     return redirect('/')
 
 if __name__=="__main__":
-  app.run()
+  app.run(debug=True)

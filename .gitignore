@@ -1,1 +1,5 @@
 myenv/
+bin/
+include/
+lib/
+lib64/
