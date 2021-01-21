@@ -27,10 +27,9 @@ def index():
     else:
         title = request.form.get('title')
         detail = request.form.get('detail')
-        due = request.form.get('due')
+        due = date.today()
         count = 0
 
-        due = datetime.strptime(due, '%Y-%m-%d')
         new_post = Post(title=title, detail=detail, due=due, count=count)
 
         db.session.add(new_post)
@@ -72,10 +71,22 @@ def update(id):
         return redirect('/')
 
 
-@app.route('/counter/<int:id>')
-def counter(id):
+@app.route('/count_plus/<int:id>')
+def count_plus(id):
     post = Post.query.get(id)
-    post.count = post.count + 1
+    if post.count >= 3:
+        db.session.delete(post)
+    else:
+        post.count = post.count + 1
+    db.session.commit()
+    return redirect('/')
+
+
+@app.route('/count_minus/<int:id>')
+def count_minus(id):
+    post = Post.query.get(id)
+    if post.count > 0:
+        post.count = post.count - 1
     db.session.commit()
     return redirect('/')
 
