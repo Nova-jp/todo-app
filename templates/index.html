@@ -1,24 +1,59 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="container">
-    <a class="btn btn-info btn-lg m-5" href="/create" role="button">CREATE NEW TASK</a>
-    {% for post in posts %}
-    <div class="card w-50 mb-3" style="margin: auto;">
-        <div class="card-body">
-            {% if post.due.date() < today %}
-            <div class="alert alert-warning" role="alert">
-                期限切れですよーーー
-            </div>
+    <div class="container">
+    <a class="btn btn-info btn-lg m-5" href="/create" role="button">新規作成</a>
+    <div class="row">
+    <div class="col-4 bg-light">
+        {% for post in posts %}
+            {% if post.count == 0 %}
+                <div class="card w-100 mb-1" style="margin: auto;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.header }}</h2>
+                        <p>日時：{{ post.due.date() }}</p>
+                        <a class="btn btn-secondary btn-sm" href="/detail/{{ post.id }}" role="button">Detail</a>
+                        <a class="btn btn-danger btn-sm" href="/count_minus/{{ post.id }}" role="button">failure</a>
+                        <a class="btn btn-success btn-sm" href="/count_plus/{{ post.id }}" role="button">success</a>
+                        <a class="btn btn-info btn-sm" href="{{ post.title }}" target="_blank" rel="noopener noreferrer" role="button">link</a>
+                    </div>
+                </div>
             {% endif %}
-            <h2 class="card-title">{{ post.title }}</h2>
-            <p>期限：{{ post.due.date() }}</p>
-            <a class="btn btn-secondary btn-sm" href="/detail/{{ post.id }}" role="button">Detail</a>
-            <a class="btn btn-success btn-sm" href="/update/{{ post.id }}" role="button">Update</a>
-            <a class="btn btn-danger btn-sm" href="/delete/{{ post.id }}" role="button">Delete</a>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+    <div class="col-4 bg-light">
+        {% for post in posts %}
+            {% if post.count == 1 %}
+                <div class="card w-100 mb-1" style="margin: auto;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.header }}</h2>
+                        <p>日時：{{ post.due.date() }}</p>
+                        <a class="btn btn-secondary btn-sm" href="/detail/{{ post.id }}" role="button">Detail</a>
+                        <a class="btn btn-danger btn-sm" href="/count_minus/{{ post.id }}" role="button">failure</a>
+                        <a class="btn btn-success btn-sm" href="/count_plus/{{ post.id }}" role="button">success</a>
+                        <a class="btn btn-info btn-sm" href="{{ post.title }}" target="_blank" rel="noopener noreferrer" role="button">link</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-4 bg-light">
+        {% for post in posts %}
+            {% if post.count >= 2 %}
+                <div class="card w-100 mb-1" style="margin: auto;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ post.header }}</h2>
+                        <p>日時：{{ post.due.date() }}</p>
+                        <a class="btn btn-secondary btn-sm" href="/detail/{{ post.id }}" role="button">Detail</a>
+                        <a class="btn btn-danger btn-sm" href="/count_minus/{{ post.id }}" role="button">failure</a>
+                        <a class="btn btn-success btn-sm" href="/count_plus/{{ post.id }}" role="button">success</a>
+                        <a class="btn btn-info btn-sm" href="{{ post.title }}" target="_blank" rel="noopener noreferrer" role="button">link</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+
+    </div>
 
 {% endblock %}
