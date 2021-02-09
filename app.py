@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
-import os
-
+import os, functions
 app = Flask(__name__)
 
 db_uri = os.environ.get('DATABASE_URL') or "sqlite:///todo.db"
@@ -14,6 +13,7 @@ db = SQLAlchemy(app)
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), nullable=False)
+    header = db.Column(db.String(30), nullable=False)
     detail = db.Column(db.String(100))
     due = db.Column(db.DateTime, nullable=False)
     count = db.Column(db.Integer)
@@ -26,11 +26,12 @@ def index():
         return render_template('index.html', posts=posts, today=date.today())
     else:
         title = request.form.get('title')
+        header = functions.shrinktitle(title)
         detail = request.form.get('detail')
         due = date.today()
         count = 0
 
-        new_post = Post(title=title, detail=detail, due=due, count=count)
+        new_post = Post(title=title, header=header, detail=detail, due=due, count=count)
 
         db.session.add(new_post)
         db.session.commit()
@@ -65,7 +66,6 @@ def update(id):
     else:
         post.title = request.form.get('title')
         post.detail = request.form.get('detail')
-        post.due = datetime.strptime(request.form.get('due'), '%Y-%m-%d')
 
         db.session.commit()
         return redirect('/')
@@ -78,6 +78,7 @@ def count_plus(id):
         db.session.delete(post)
     else:
         post.count = post.count + 1
+        post.due = date.today()
     db.session.commit()
     return redirect('/')
 
@@ -87,6 +88,7 @@ def count_minus(id):
     post = Post.query.get(id)
     if post.count > 0:
         post.count = post.count - 1
+    post.due = date.today()
     db.session.commit()
     return redirect('/')
 
