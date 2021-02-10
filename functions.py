@@ -5,6 +5,7 @@ def shrinktitle(name):
         if i == '/':
             cnt = now
         now += 1
-    cnt += 1
+    if cnt != 0:
+      cnt+=1
     b = name[cnt:now]
     return b

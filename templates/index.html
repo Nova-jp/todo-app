@@ -43,6 +43,11 @@
                     <div class="card-body">
                         <h2 class="card-title">{{ post.header }}</h2>
                         <p>日時：{{ post.due.date() }}</p>
+                        {%if post.count >=3%}
+                          <div class="alert alert-warning" role="alert">
+                          <p>もう一度successを押すと消去されます。</p>
+                          </div>
+                        {% endif %}
                         <a class="btn btn-secondary btn-sm" href="/detail/{{ post.id }}" role="button">Detail</a>
                         <a class="btn btn-danger btn-sm" href="/count_minus/{{ post.id }}" role="button">failure</a>
                         <a class="btn btn-success btn-sm" href="/count_plus/{{ post.id }}" role="button">success</a>
